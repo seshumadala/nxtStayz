@@ -22,6 +22,15 @@ public class HotelJpaService implements HotelRepository {
         ArrayList<Hotel> hotels = new ArrayList<>(hotelList);
         return hotels;
     }
+    @Override
+    public List<Room> getHotelRooms(int hotelId) {
+        try {
+            Hotel hotel = hotelJpaRepository.findById(hotelId).get();
+            return roomJpaRepository.findByHotel(hotel);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @Override
     public Hotel getHotelById(int hotelId) {
